@@ -377,3 +377,26 @@ Hekili.Snapshots = ns.snapshots
 
 ns.Tooltip = CreateFrame( "GameTooltip", "HekiliTooltip", UIParent, "GameTooltipTemplate" )
 Hekili:ProfileFrame( "HekiliTooltip", ns.Tooltip )
+
+function Hekili:GetRecommendedAbility(display, entry)
+    entry = entry or 1
+
+    if not rawget(Hekili.DB.profile.displays, display) then
+        print("Display not found for " .. display)
+        return nil, "Display not found."
+    end
+
+    if not ns.queue[display] then
+        print("No queue for that display " .. display)
+        return nil, "No queue for that display."
+    end
+
+    local slot = ns.queue[display][entry]
+
+    if not slot or not slot.actionID then
+        print("No entry #" .. entry .. " for that display " .. display)
+        return nil, "No entry #" .. entry .. " for that display."
+    end
+
+    return slot.actionID, slot.empower_to
+end
