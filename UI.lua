@@ -2541,6 +2541,21 @@ do
         b.Keybinding:SetText( nil )
         b.Keybinding:SetText( kbText )
 
+        -- 배경 추가
+        if not b.Keybinding.bg then
+            b.Keybinding.bg = b:CreateTexture(nil, "BACKGROUND")
+            b.Keybinding.bg:SetColorTexture(0, 0, 0, 1)  -- R, G, B, A, 검은색 반투명 배경
+        end
+        b.Keybinding.bg:ClearAllPoints()
+        b.Keybinding.bg:SetPoint("TOPLEFT", b.Keybinding, "TOPLEFT", -30, 10) -- left, top
+        b.Keybinding.bg:SetPoint("BOTTOMRIGHT", b.Keybinding, "BOTTOMRIGHT", 10, -20) -- right, bottom
+        --[[
+        b.Keybinding.bg:SetPoint("TOPLEFT", b, "TOPLEFT", 0, 0)
+        b.Keybinding.bg:SetPoint("BOTTOMRIGHT", b, "BOTTOMRIGHT", 0, 0)
+        b.Keybinding:SetDrawLayer("OVERLAY", 1)
+        b.Keybinding.bg:SetDrawLayer("BACKGROUND", 0)
+        ]]--
+
         -- Cooldown Wheel
         if not b.Cooldown then
             b.Cooldown = CreateFrame( "Cooldown", bName .. "_Cooldown", b, "CooldownFrameTemplate" )
@@ -3121,3 +3136,4 @@ function Hekili:SaveCoordinates()
 
     self.DB.profile.notifications.x, self.DB.profile.notifications.y = select( 4, HekiliNotification:GetPoint() )
 end
+
